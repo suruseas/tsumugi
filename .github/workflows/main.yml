@@ -1,27 +1,61 @@
-name: Ruby
+name: Ruby CI
 
 on:
   push:
     branches:
-      - master
-
+      - main
   pull_request:
+    branches:
+      - main
 
 jobs:
-  build:
+  rspec:
     runs-on: ubuntu-latest
-    name: Ruby ${{ matrix.ruby }}
     strategy:
       matrix:
         ruby:
           - '3.3.3'
-
+    name: Rspec tests: Ruby ${{ matrix.ruby }}
     steps:
-    - uses: actions/checkout@v4
-    - name: Set up Ruby
-      uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: ${{ matrix.ruby }}
-        bundler-cache: true
-    - name: Run the default task
-      run: bundle exec rake
+      - uses: actions/checkout@v4
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
+          bundler-cache: true
+      - name: Install dependencies
+        run: bundle install
+      - name: Run tests
+        run: bundle exec rspec
+  rubocop:
+    runs-on: ubuntu-latest
+    name: Rubocop
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.3.3
+          bundler-cache: true
+      - name: Install dependencies
+        run: bundle install
+      - name: Run style checks
+        run: bundle exec rubocop
+
+  # build:
+  #   runs-on: ubuntu-latest
+  #   name: Ruby ${{ matrix.ruby }}
+  #   strategy:
+  #     matrix:
+  #       ruby:
+  #         - '3.3.3'
+
+  #   steps:
+  #   - uses: actions/checkout@v4
+  #   - name: Set up Ruby
+  #     uses: ruby/setup-ruby@v1
+  #     with:
+  #       ruby-version: ${{ matrix.ruby }}
+  #       bundler-cache: true
+  #   - name: Run the default task
+  #     run: bundle exec rake
