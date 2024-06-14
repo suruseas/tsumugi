@@ -15,7 +15,7 @@ jobs:
       matrix:
         ruby:
           - '3.3.3'
-    name: Rspec tests: Ruby ${{ matrix.ruby }}
+    name: "Rspec tests: Ruby ${{ matrix.ruby }}"
     steps:
       - uses: actions/checkout@v4
       - name: Set up Ruby
