@@ -1,0 +1,13 @@
+services:
+  app:
+    build: .
+    command: bash
+    tty: true
+    volumes:
+      - .:/usr/src/app
+      - bundle:/usr/local/bundle
+    environment:
+      - HISTFILE=/usr/src/app/log/.bash_history
+
+volumes:
+  bundle:
