@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require_relative "app/version"
+require_relative "tsumugi/version"
 
-module App
+module Tsumugi
   class Error < StandardError; end
   # Your code goes here...
 end
